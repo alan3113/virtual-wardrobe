@@ -1,0 +1,7 @@
+import {client,demoMode,loadLocal,saveLocal,wait} from './client'
+import type {AuthResponse,Credentials,RegisterInput,User} from '../types'
+const demoUser:User={id:'demo',name:'Alex Morgan',email:'alex@example.com'}
+export async function login(input:Credentials):Promise<AuthResponse>{if(demoMode){await wait();const user={...demoUser,email:input.email};saveLocal('wardrobe_user',user);localStorage.setItem('wardrobe_token','demo-token');return {access_token:'demo-token',token_type:'bearer',user}}const {data}=await client.post<AuthResponse>('/auth/login',input);localStorage.setItem('wardrobe_token',data.access_token);saveLocal('wardrobe_user',data.user);return data}
+export async function register(input:RegisterInput):Promise<AuthResponse>{if(demoMode){await wait();const user={id:crypto.randomUUID(),name:input.name,email:input.email};saveLocal('wardrobe_user',user);localStorage.setItem('wardrobe_token','demo-token');return {access_token:'demo-token',token_type:'bearer',user}}const {data}=await client.post<AuthResponse>('/auth/register',input);localStorage.setItem('wardrobe_token',data.access_token);saveLocal('wardrobe_user',data.user);return data}
+export async function getMe():Promise<User>{if(demoMode){await wait(120);return loadLocal('wardrobe_user',demoUser)}const {data}=await client.get<User>('/auth/me');return data}
+export function logout(){localStorage.removeItem('wardrobe_token');localStorage.removeItem('wardrobe_user')}

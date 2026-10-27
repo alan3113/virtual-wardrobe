@@ -1,0 +1,32 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: wardrobe
+      POSTGRES_USER: wardrobe
+      POSTGRES_PASSWORD: wardrobe
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wardrobe -d wardrobe"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+  api:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://wardrobe:wardrobe@db:5432/wardrobe
+      PUBLIC_BASE_URL: http://localhost:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - uploads:/code/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  postgres_data:
+  uploads:

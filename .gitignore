@@ -1,0 +1,31 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+.aws/
+
+# Editor and agent metadata
+.agents/
+.codex/
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+**/__pycache__/
+**/.pytest_cache/
+**/.venv/
+*.py[cod]
+*.sqlite3
+
+# Node / frontend builds
+**/node_modules/
+**/dist/
+*.tsbuildinfo
+
+# Runtime uploads (retain placeholder files)
+virtual_wardrobe_be/uploads/*
+!virtual_wardrobe_be/uploads/.gitkeep

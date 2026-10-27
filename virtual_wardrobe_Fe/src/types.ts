@@ -1,0 +1,12 @@
+export type Category = 'Tops' | 'Bottoms' | 'Shoes' | 'Outerwear' | 'Accessories'
+export type Season = 'Spring' | 'Summer' | 'Autumn' | 'Winter' | 'All season'
+export type ClothingItem = { id:string; name:string; category:Category; color:string; style:string; material:string; occasion:string; season:Season; image_url:string; created_at:string; notes?:string }
+export type ClothingInput = Omit<ClothingItem,'id'|'created_at'>
+export type Outfit = { id:string; name:string; item_ids:string[]; occasion:string; description:string; saved:boolean; created_at:string }
+export type WardrobeGap = { id:string; category:string; title:string; description:string; priority:'High'|'Medium'|'Low'; image_url:string; pairs_with:string[] }
+export type Product = { id:string; name:string; brand:string; price:string; image_url:string; category:Category; color:string; url?:string }
+export type ShoppingAnalysis = { id:string; product:Product; wardrobe_match:number; similar_item_owned:number; compatible_items:number; new_outfits:number; duplicate_risk:'Low'|'Medium'|'High'; wardrobe_gap:boolean; explanation:string; outfit_item_ids:string[][] }
+export type User = { id:string; name:string; email:string; avatar_url?:string }
+export type AuthResponse = { access_token:string; token_type:string; user:User }
+export type Credentials = { email:string; password:string }
+export type RegisterInput = Credentials & { name:string }

@@ -1,0 +1,13 @@
+import {useCallback,useState} from 'react'
+import {Navigate,Route,Routes} from 'react-router-dom'
+import {AppShell,Toast} from './components/UI'
+import Dashboard from './pages/Dashboard'
+import Wardrobe from './pages/Wardrobe'
+import ClothingDetails from './pages/ClothingDetails'
+import AddClothing from './pages/AddClothing'
+import OutfitStudio from './pages/OutfitStudio'
+import Shopping from './pages/Shopping'
+import ProductAnalysis from './pages/ProductAnalysis'
+import {Profile,SavedOutfits,WardrobeGaps} from './pages/OtherPages'
+import {AuthPage,Landing} from './pages/PublicPages'
+export default function App(){const [message,setMessage]=useState('');const notify=useCallback((s:string)=>setMessage(s),[]);return <><Routes><Route path="/" element={<Landing/>}/><Route path="/login" element={<AuthPage mode="login" notify={notify}/>}/><Route path="/register" element={<AuthPage mode="register" notify={notify}/>}/><Route path="/dashboard" element={<AppShell><Dashboard/></AppShell>}/><Route path="/wardrobe" element={<AppShell><Wardrobe/></AppShell>}/><Route path="/wardrobe/add" element={<AppShell><AddClothing notify={notify}/></AppShell>}/><Route path="/wardrobe/:id/edit" element={<AppShell><AddClothing notify={notify}/></AppShell>}/><Route path="/wardrobe/:id" element={<AppShell><ClothingDetails notify={notify}/></AppShell>}/><Route path="/outfit-studio" element={<AppShell><OutfitStudio notify={notify}/></AppShell>}/><Route path="/before-you-buy" element={<AppShell><Shopping notify={notify}/></AppShell>}/><Route path="/product-analysis" element={<AppShell><ProductAnalysis/></AppShell>}/><Route path="/wardrobe-gaps" element={<AppShell><WardrobeGaps/></AppShell>}/><Route path="/saved-outfits" element={<AppShell><SavedOutfits notify={notify}/></AppShell>}/><Route path="/profile" element={<AppShell><Profile/></AppShell>}/><Route path="*" element={<Navigate to="/" replace/>}/></Routes>{message&&<Toast message={message} onClose={()=>setMessage('')}/>}</>}

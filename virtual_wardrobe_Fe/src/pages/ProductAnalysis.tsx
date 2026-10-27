@@ -1,0 +1,10 @@
+import {ArrowLeft} from 'lucide-react'
+import {useQuery} from '@tanstack/react-query'
+import {Link} from 'react-router-dom'
+import {getClothingItems} from '../api/wardrobe'
+import {demoAnalysis} from '../data/demo'
+import {loadLocal} from '../api/client'
+import type {ShoppingAnalysis} from '../types'
+import {PageHeader} from '../components/UI'
+import {AnalysisResult} from './Shopping'
+export default function ProductAnalysis(){const items=useQuery({queryKey:['items'],queryFn:getClothingItems});return <div><Link to="/before-you-buy" className="inline-flex items-center gap-2 text-xs font-semibold text-muted mb-8"><ArrowLeft size={15}/> Back to shopping analysis</Link><PageHeader eyebrow="Shopping intelligence" title="Product Analysis" description="A closer look at what this piece brings to your wardrobe."/><AnalysisResult analysis={loadLocal<ShoppingAnalysis>('wardrobe_last_analysis',demoAnalysis)} items={items.data||[]} onStyle={()=>window.location.assign('/outfit-studio')}/></div>}
